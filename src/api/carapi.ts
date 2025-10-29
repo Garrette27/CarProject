@@ -11,8 +11,10 @@ const getAxiosConfig = (): AxiosRequestConfig => {
   };
 };
 
+const getApiUrl = () => (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+
 export const getCars = async (): Promise<CarResponse[]> => {
-  const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/cars`, getAxiosConfig());
+  const response = await axios.get(`${getApiUrl()}/api/cars`, getAxiosConfig());
   return response.data._embedded.cars;
 }
 
@@ -22,7 +24,7 @@ export const deleteCar = async (link: string): Promise<CarResponse> => {
 }
 
 export const addCar = async (car: Car): Promise<CarResponse> => {
-  const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/cars`, car, getAxiosConfig());
+  const response = await axios.post(`${getApiUrl()}/api/cars`, car, getAxiosConfig());
   return response.data;
 }
 

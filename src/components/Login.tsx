@@ -25,7 +25,8 @@ function Login() {
   }
 
   const handleLogin = () => {
-    axios.post(import.meta.env.VITE_API_URL + "/login", user, {
+    const apiUrl = import.meta.env.VITE_API_URL?.replace(/\/$/, '') || '';
+    axios.post(`${apiUrl}/login`, user, {
       headers: { 'Content-Type': 'application/json' }
     })
     .then(res => {
