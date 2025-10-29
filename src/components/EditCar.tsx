@@ -53,8 +53,10 @@ function EditCar({ cardata }: FormProps) {
     setOpen(false);
   };
   const handleSave = () => {
-    const url = cardata._links.self.href;
-    const carEntry: CarEntry = {car, url}
+    const getApiUrl = () => (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+    const rawUrl = cardata._links.self.href;
+    const fullUrl = rawUrl.startsWith('http') ? rawUrl : `${getApiUrl()}${rawUrl}`;
+    const carEntry: CarEntry = {car, url: fullUrl}
     mutate(carEntry);
     setCar({ brand: '', model: '', color: '', registrationNumber: '', modelYear: 0, price: 0 });    
     setOpen(false);
