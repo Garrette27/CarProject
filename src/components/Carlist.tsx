@@ -21,7 +21,8 @@ function Carlist({ logOut }: CarlistProps) {
 
 const { data, isError, isLoading, isSuccess } = useQuery({
     queryKey: ["cars"],
-    queryFn: getCars
+    queryFn: getCars,
+    retry: false
   });
 
   const { mutate } = useMutation(deleteCar, {
