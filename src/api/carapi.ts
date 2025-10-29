@@ -3,12 +3,15 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 const getAxiosConfig = (): AxiosRequestConfig => {
   const token = sessionStorage.getItem("jwt");
-  return {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
+  const headers: any = {
+    'Content-Type': 'application/json',
   };
+  
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  
+  return { headers };
 };
 
 const getApiUrl = () => (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
