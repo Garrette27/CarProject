@@ -25,7 +25,9 @@ const { data, isError, isLoading, isSuccess } = useQuery({
     retry: false
   });
 
-  const { mutate } = useMutation(deleteCar, {
+  const getApiUrl = () => (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+
+const { mutate } = useMutation(deleteCar, {
     onSuccess: () => {
       setOpen(true);
       queryClient.invalidateQueries({ queryKey: ['cars'] });
@@ -63,7 +65,10 @@ const { data, isError, isLoading, isSuccess } = useQuery({
         <IconButton aria-label="delete" size="small"
           onClick={() => {
             if (window.confirm(`Are you sure you want to delete ${params.row.brand} ${params.row.model}?`)) {
-              mutate(params.row._links.car.href);
+              const fullUrl = params.row._links.car.href.startsWith('http') 
+                ? params.row._links.car.href 
+                : `${getApiUrl()}${params.row._links.car.href}`;
+              mutate(fullUrl);
             } 
           }}       
         >
