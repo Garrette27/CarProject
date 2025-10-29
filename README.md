@@ -1,27 +1,36 @@
-# React + TypeScript + Vite
+# CarProject
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Environment configuration
 
-Currently, two official plugins are available:
+This app reads the backend base URL from a Vite env variable `VITE_API_URL`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1) Create a `.env` file in the project root (same folder as `package.json`):
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```
+VITE_API_URL=https://your-backend-url.example.com
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Tip: See `.env.example` for the key you need. For local backend testing, you can use:
+
+```
+VITE_API_URL=http://localhost:3000
+```
+
+2) After changing `.env`, restart the dev server or rebuild for production so Vite picks up new values.
+
+## Development
+
+```
+npm install
+npm run dev
+```
+
+Open `http://localhost:5173`.
+
+## Production build
+
+```
+npm run build
+```
+
+Deploy the `dist/` directory to your host.

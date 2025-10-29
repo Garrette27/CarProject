@@ -5,7 +5,7 @@ const getAxiosConfig = (): AxiosRequestConfig => {
   const token = sessionStorage.getItem("jwt");
   return {
     headers: {
-      'Authorization': token,
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   };
