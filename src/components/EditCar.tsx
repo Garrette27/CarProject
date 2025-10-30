@@ -18,6 +18,8 @@ type FormProps = {
 function EditCar({ cardata }: FormProps) {
   const queryClient = useQueryClient();
 
+  const getApiUrl = () => (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+
   const [open, setOpen] = useState(false);
   const [car, setCar] = useState<Car>({
     brand: '',
@@ -53,10 +55,10 @@ function EditCar({ cardata }: FormProps) {
     setOpen(false);
   };
   const handleSave = () => {
-    const getApiUrl = () => (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
-    const rawUrl = cardata._links.self.href;
-    const fullUrl = rawUrl.startsWith('http') ? rawUrl : `${getApiUrl()}${rawUrl}`;
-    const carEntry: CarEntry = {car, url: fullUrl}
+    const url = cardata._links.self.href.startsWith('http')
+      ? cardata._links.self.href
+      : `${getApiUrl()}${cardata._links.self.href}`;
+    const carEntry: CarEntry = {car, url}
     mutate(carEntry);
     setCar({ brand: '', model: '', color: '', registrationNumber: '', modelYear: 0, price: 0 });    
     setOpen(false);

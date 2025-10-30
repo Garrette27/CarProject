@@ -10,7 +10,11 @@ const PORT = process.env.PORT || 3000;
 const SECRET_KEY = 'your-secret-key-change-in-production'; // Change this in production!
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['authorization']
+}));
 app.use(express.json());
 
 // Load data from file or initialize with default data
@@ -96,6 +100,8 @@ const authenticateJWT = expressjwt({
 // Login endpoint
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
+  // Ensure frontend can read the token header in cross-origin responses
+  res.setHeader('Access-Control-Expose-Headers', 'authorization');
   
   const user = users.find(u => u.username === username);
   
